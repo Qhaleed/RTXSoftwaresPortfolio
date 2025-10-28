@@ -8,15 +8,18 @@
   height: 1.2em;
   overflow: hidden;
   color: white;
-  transition: opacity 0.3s ease;
+  transition: opacity 1.3s ease;
 }
 
 .loader.show {
   opacity: 1;
+  transition: 1.5s ease-in-out;
 }
 
 .loader.hidden {
   opacity: 0;
+  transition: 1.5s ease-out;
+
   pointer-events: none;
 }
 

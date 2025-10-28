@@ -1,5 +1,14 @@
 <div class="video-background">
-  <!-- YouTube video iframe -->
+  <!-- Fallback image shown until video is ready (uses YouTube thumbnail) -->
+  <img
+    class="video-fallback z-50"
+    [style.opacity]="videoReady() ? 0 : 1"
+    src="https://i.ytimg.com/vi/OkNo_N85em0/maxresdefault.jpg"
+    alt="Background placeholder"
+    loading="eager"
+  />
+
+  <!-- YouTube video iframe (preloaded under image) -->
   <iframe
     width="100%"
     height="100%"
@@ -8,7 +17,10 @@
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen
-    referrerpolicy="strict-origin-when-cross-origin">
+    referrerpolicy="strict-origin-when-cross-origin"
+    (load)="onVideoReady()"
+    [style.opacity]="videoReady() ? 1 : 0"
+  >
   </iframe>
 
   <!-- Dark overlay -->

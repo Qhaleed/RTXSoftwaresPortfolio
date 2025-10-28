@@ -5,11 +5,11 @@
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:gap-8">
             <!-- Carousel Item -->
             <div *ngFor="let item of galleryItems" class="relative">
-                <div class="carousel max-w-xl flex overflow-x-auto snap-x snap-mandatory scroll-smooth rounded-lg shadow-lg">
+                <div class="carousel max-w-md flex overflow-x-auto snap-x snap-mandatory scroll-smooth rounded-lg shadow-lg">
                     <!-- Carousel items -->
                     <div *ngFor="let image of item.images" class="carousel-item flex-none w-full snap-center">
-                        <img [src]="image" 
-                             [alt]="item.title" 
+                        <img [src]="image"
+                             [alt]="item.title"
                              (click)="openImage(image)"
                              class="w-full h-96 object-cover cursor-pointer">
                     </div>

@@ -6,10 +6,11 @@ import { About } from "./about/about";
 import { Gallery } from "./gallery/gallery";
 import { Preview } from "./preview/preview";
 import { Loader } from "./loader/loader";
+import { Footer } from "./footer/footer";
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, Navbar, Hero, About, Gallery, Preview, Loader],
+  imports: [CommonModule, Navbar, Hero, About, Gallery, Preview, Loader, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

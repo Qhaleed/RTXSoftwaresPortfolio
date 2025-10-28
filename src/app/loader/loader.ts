@@ -13,6 +13,6 @@ export class Loader implements OnInit {
     // After 2 seconds, change class from show to hidden
     setTimeout(() => {
       this.loaderClass = 'hidden';
-    }, 2000);
+    }, 3000);
   }
 }

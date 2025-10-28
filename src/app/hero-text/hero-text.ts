@@ -16,14 +16,14 @@ export class HeroText implements AfterViewInit {
 
     createTimeline({
       loop: true,
-      defaults: { ease: 'inOut(5)', duration: 650 }
+      defaults: { ease: 'inOut(5)', duration: 1650 }
     })
-      .add(words, {
-        y: [($el: any) => +$el.dataset.line % 2 ? '100%' : '-100%', '0%'],
-      }, stagger(250))
       .add(chars, {
+        y: [($el: any) => +$el.dataset.line % 2 ? '100%' : '-100%', '0%'],
+      }, stagger(150, { from: 'random' }))
+      .add(words, {
         y: ($el: any) => +$el.dataset.line % 2 ? '100%' : '-100%',
-      }, stagger(100, { from: 'random' }))
+      }, stagger(500, { from: 'random' }))
       .init();
   }
 }

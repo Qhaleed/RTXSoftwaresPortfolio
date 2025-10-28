@@ -35,6 +35,7 @@
   /* Make video cover the entire area */
   min-width: 100%;
   min-height: 100%;
+  transition: opacity 200ms ease;
 }
 
 .video-overlay {
@@ -46,4 +47,19 @@
   background-color: rgba(0, 0, 0, 0.50); /* 50% dark overlay */
   z-index: 1;
   pointer-events: none;
+}
+
+/* Fallback image uses same cover layout as iframe */
+.video-fallback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  pointer-events: none;
+  min-width: 100%;
+  min-height: 100%;
+  transition: opacity 200ms ease;
 }
