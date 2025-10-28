@@ -1,0 +1,61 @@
+<div class="bg-black h-fit py-6 sm:py-8 lg:py-12 w0 px-15">
+    <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+        <h2 class="text-3xl font-bold text-center mb-8 text-white">Project Gallery</h2>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:gap-8">
+            <!-- Carousel Item -->
+            <div *ngFor="let item of galleryItems" class="relative">
+                <div class="carousel max-w-xl flex overflow-x-auto snap-x snap-mandatory scroll-smooth rounded-lg shadow-lg">
+                    <!-- Carousel items -->
+                    <div *ngFor="let image of item.images" class="carousel-item flex-none w-full snap-center">
+                        <img [src]="image" 
+                             [alt]="item.title" 
+                             (click)="openImage(image)"
+                             class="w-full h-96 object-cover cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Title Overlay -->
+                <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-gray-800 via-transparent to-transparent p-4">
+                    <span class="text-sm text-white md:text-lg font-semibold">{{ item.title }}</span>
+                </div>
+
+                <!-- Carousel controls -->
+                <div class="absolute inset-y-0 left-0 flex items-center justify-start pl-4">
+                    <button (click)="scrollPrev($event)"
+                        class="carousel-control-prev bg-gray-800 hover:bg-gray-700 text-white rounded-full p-2 focus:outline-none z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center justify-end pr-4">
+                    <button (click)="scrollNext($event)"
+                        class="carousel-control-next bg-gray-800 hover:bg-gray-700 text-white rounded-full p-2 focus:outline-none z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div *ngIf="selectedImage"
+         (click)="closeImage()"
+         class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4 cursor-pointer">
+        <div class="relative max-w-7xl max-h-full">
+            <button (click)="closeImage()"
+                    class="absolute -top-10 right-0 text-white text-4xl font-bold hover:text-gray-300 z-10">
+                &times;
+            </button>
+            <img [src]="selectedImage"
+                 alt="Full size image"
+                 class="max-w-full max-h-[90vh] object-contain rounded-lg"
+                 (click)="$event.stopPropagation()" />
+        </div>
+    </div>
+</div>

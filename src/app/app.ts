@@ -1,12 +1,38 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, signal, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Navbar } from "./navbar/navbar";
+import { Hero } from "./hero/hero";
+import { About } from "./about/about";
+import { Gallery } from "./gallery/gallery";
+import { Preview } from "./preview/preview";
+import { Loader } from "./loader/loader";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [CommonModule, Navbar, Hero, About, Gallery, Preview, Loader],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('RTXSoftwaresPortfolio');
+  showLoader = signal(true);
+
+  ngOnInit() {
+    // Lock page scroll while loader is visible
+    const html = document.documentElement;
+    const body = document.body;
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = body.style.overflow;
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+
+    // Show loader for 2 seconds on page load
+    setTimeout(() => {
+      this.showLoader.set(false);
+
+      // Restore scroll after loader hides
+      html.style.overflow = prevHtmlOverflow;
+      body.style.overflow = prevBodyOverflow;
+    }, 2000);
+  }
 }

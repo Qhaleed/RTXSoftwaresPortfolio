@@ -1,0 +1,16 @@
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  z-index: 9999;
+  overflow: hidden;
+  /* Block scroll gestures while loader is present */
+  overscroll-behavior: none;
+  touch-action: none;
+}

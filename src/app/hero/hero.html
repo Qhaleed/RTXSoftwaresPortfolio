@@ -1,0 +1,37 @@
+
+
+<!-- Middle Section -->
+<section class="main-section relative w-full flex items-center justify-center min-h-screen overflow-hidden">
+  <!-- Background Video -->
+  <app-background-video></app-background-video>
+
+  <!-- Overlay for better text visibility -->
+  <!-- <div class="absolute inset-0 bg-black bg-opacity-1 z-10"></div> -->
+
+  <!-- Content -->
+  <div class="relative z-20 container mx-auto px-4 text-center text-white">
+    <app-hero-text> </app-hero-text>
+    <p class="mx-auto my-10 mb-8 max-w-2xl text-lg">
+      Professional Software Development services for personal, professional, and commercial purposes. Let us build your Software through our lens.
+    </p>
+
+    <!-- CTA Button -->
+    <div class="flex justify-center items-center mt-8" data-aos="fade-up" data-aos-delay="400">
+      <a href="#pricing" rel="noopener noreferrer"
+        class="relative flex items-center justify-center px-6 py-3 bg-white text-black border-black border hover:bg-black hover:text-white hover:border-white text-lg font-semibold rounded-full shadow-lg transform hover:scale-105 transition-transform duration-200">
+
+        <span class="absolute inset-0 rounded-full bg-white opacity-10 animate-ping "></span>
+        <span class="relative z-10 pr-2">Inquire Now</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll Down Icon -->
+  <div class="absolute sm:bottom-14 bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
+    <a href="#about" class="cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </a>
+  </div>
+</section>

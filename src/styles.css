@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* Enable smooth scrolling for in-page anchors and account for fixed navbar */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem; /* prevent anchors from hiding under fixed navbar */
+}
+
+/* In case elements use :target without scroll-padding context */
+:target {
+  scroll-margin-top: 4.5rem;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollReverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 40s linear infinite;
+}
+
+.animate-scrollReverse {
+  animation: scrollReverse 40s linear infinite;
+}
