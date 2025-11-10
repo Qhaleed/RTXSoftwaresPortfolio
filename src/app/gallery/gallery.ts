@@ -31,6 +31,10 @@ export class Gallery {
     {
       title: 'Faculty',
       images: ['assets/faculty1.png', 'assets/faculty2.png', 'assets/faculty1.png']
+    },
+    {
+      title: 'Cynergy',
+      images: ['assets/cynergy1.png', 'assets/cynergy2.png', 'assets/cynergy3.png']
     }
   ];
 
