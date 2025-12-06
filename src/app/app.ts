@@ -8,7 +8,7 @@ import { Preview } from "./preview/preview";
 import { Loader } from "./loader/loader";
 import { Footer } from "./footer/footer";
 import { Pricing } from "./pricing/pricing";
-
+import { RouterModule, Routes } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [CommonModule, Navbar, Hero, About, Gallery, Preview, Loader, Footer, Pricing],
