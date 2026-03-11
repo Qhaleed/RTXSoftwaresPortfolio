@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
-import { App } from './app';
-import { Pricing } from './pricing/pricing';
+import { Homepage } from './pages/homepage/homepage';
 import { Pricingpage } from './pages/pricingpage/pricingpage';
+import { Contactpage } from './pages/contactpage/contactpage';
 
 export const routes: Routes = [
-  { path: '', component: App },       // default route
+  { path: '', component: Homepage },
   { path: 'pricing', component: Pricingpage },
+  { path: 'contact', component: Contactpage },
   // { path: '**', redirectTo: '' }
 ];
