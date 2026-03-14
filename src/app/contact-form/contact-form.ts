@@ -1,7 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import emailjs from '@emailjs/browser';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-contact-form',
@@ -10,6 +12,13 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
   styleUrl: './contact-form.css',
 })
 export class ContactForm implements OnInit {
+  // Using configuration from the environments file.
+  private readonly emailJsConfig = {
+    serviceId: environment.emailJsServiceId,
+    templateId: environment.emailJsTemplateId,
+    publicKey: environment.emailJsPublicKey,
+  };
+
   selectedPlan = signal('');
   fullName = '';
   email = '';
@@ -22,6 +31,8 @@ export class ContactForm implements OnInit {
   timeline = '';
   requirements = '';
   submitted = signal(false);
+  isSubmitting = signal(false);
+  submitError = signal('');
 
   plans = [
     'Basic Web',
@@ -57,34 +68,70 @@ export class ContactForm implements OnInit {
     return tomorrow.toISOString().split('T')[0];
   }
 
-  onSubmit() {
-    const subject = encodeURIComponent(
-      `Project Inquiry – ${this.selectedPlan() || 'General'}`
-    );
-    const body = encodeURIComponent(
-      `Hello RTX Softwares,\n\n` +
-      `I would like to inquire about your services.\n\n` +
-      `--- Contact Details ---\n` +
-      `Name: ${this.fullName}\n` +
-      `Email: ${this.email}\n` +
-      `Phone: ${this.phone || 'N/A'}\n` +
-      `Company: ${this.company || 'N/A'}\n\n` +
-      `--- Selected Plan ---\n` +
-      `${this.selectedPlan() || 'Not specified'}\n\n` +
-      `--- Meeting Preference ---\n` +
-      `Date: ${this.preferredDate || 'Flexible'}\n` +
-      `Time: ${this.preferredTime || 'Flexible'}\n\n` +
-      `--- Project Details ---\n` +
-      `Type: ${this.projectType || 'N/A'}\n` +
-      `Budget Range: ${this.budget || 'N/A'}\n` +
-      `Timeline: ${this.timeline || 'N/A'}\n\n` +
-      `--- Requirements & Specifications ---\n` +
-      `${this.requirements || 'N/A'}\n\n` +
-      `Looking forward to hearing from you.\n` +
-      `Best regards,\n${this.fullName}`
-    );
+  private isEmailJsConfigured(): boolean {
+    return !Object.values(this.emailJsConfig).some((value) => value.startsWith('YOUR_EMAILJS_'));
+  }
 
-    window.location.href = `mailto:contact@rtxsoftwares.com?subject=${subject}&body=${body}`;
-    this.submitted.set(true);
+  async onSubmit(form: NgForm) {
+    if (this.isSubmitting()) {
+      return;
+    }
+
+    this.isSubmitting.set(true);
+    this.submitError.set('');
+
+    if (!this.isEmailJsConfigured()) {
+      this.submitError.set('Email sending is not configured yet. Add your EmailJS IDs in contact-form.ts.');
+      this.isSubmitting.set(false);
+      return;
+    }
+
+    const compiledMessage = `
+--- Contact Details ---
+Name: ${this.fullName}
+Email: ${this.email}
+Phone: ${this.phone || 'N/A'}
+Company: ${this.company || 'N/A'}
+
+--- Selected Plan ---
+${this.selectedPlan() || 'Not specified'}
+
+--- Meeting Preference ---
+Date: ${this.preferredDate || 'Flexible'}
+Time: ${this.preferredTime || 'Flexible'}
+
+--- Project Details ---
+Type: ${this.projectType || 'N/A'}
+Budget Range: ${this.budget || 'N/A'}
+Timeline: ${this.timeline || 'N/A'}
+
+--- Requirements & Specifications ---
+${this.requirements || 'N/A'}
+`.trim();
+
+    const templateParams = {
+      subject: `Project Inquiry - ${this.selectedPlan() || 'General'}`,
+      name: this.fullName,
+      message: compiledMessage,
+    };
+
+    try {
+      await emailjs.send(
+        this.emailJsConfig.serviceId,
+        this.emailJsConfig.templateId,
+        templateParams,
+        {
+          publicKey: this.emailJsConfig.publicKey,
+        }
+      );
+
+      this.submitted.set(true);
+      form.resetForm();
+      this.selectedPlan.set('');
+    } catch {
+      this.submitError.set('We could not send your inquiry right now. Please try again in a moment.');
+    } finally {
+      this.isSubmitting.set(false);
+    }
   }
 }
